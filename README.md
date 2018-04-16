@@ -1,13 +1,14 @@
-**PICTSY**
+# PICTSY
+
 Use the Imgur API `gallery` and `comments` endpoints to browse their pictures database.
 https://ca-pictsy.herokuapp.com/
 
-**_Getting Started_**
+## Getting Started
 
 * clone
 * `cd jigsaw && yarn && yarn start`
 
-**_features_**
+## features
 
 * pagination of results
 * sort by "most recent", "viral" or "top"
@@ -15,10 +16,9 @@ https://ca-pictsy.herokuapp.com/
 * flexbox responsiveness
 * custom logo using sketch
 
-**_TODO_**
+## TODO
 
 * time animations properly for fluid UI/UX
 * paginate comments
 * add replies to existing comments
 * add likes to pictures, comments and replies
-
