@@ -22,3 +22,4 @@ https://ca-pictsy.herokuapp.com/
 * paginate comments
 * add replies to existing comments
 * add likes to pictures, comments and replies
+* code cleanup

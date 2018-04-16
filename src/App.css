@@ -80,6 +80,7 @@ p {
   display: flex;
   position: absolute;
   align-self: flex-end;
+  padding-bottom: 6px;
 }
 
 .nsfw-checkbox {
@@ -120,6 +121,8 @@ p {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
+  width: 60%;
 }
 
 .pad16 {
@@ -673,5 +676,23 @@ p {
   .image-container {
     flex-direction: column;
     overflow: scroll;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .form-container {
+    width: 100%;
+  }
+  .search-input {
+    font-size: 22px;
+  }
+  .nsfw-checkbox-container {
+    padding-bottom: unset;
+  }
+  .sort-by {
+    flex-direction: column;
+  }
+  .pad16 {
+    padding: unset;
   }
 }

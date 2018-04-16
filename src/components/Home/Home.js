@@ -206,7 +206,7 @@ class UnconnectedHome extends Component {
   };
 
   render() {
-    const { searchQuery, isAppReady, loading } = this.state;
+    const { searchQuery, isAppReady, loading, sortBy } = this.state;
     const { picturesOnView, nsfwResultsCount } = this.props;
 
     return (
@@ -267,7 +267,7 @@ class UnconnectedHome extends Component {
               type="radio"
               className="radio"
               name="parser-type"
-              checked={this.state.sortBy === "time"}
+              checked={sortBy === "time"}
             />
             <p
               id="time"
@@ -283,7 +283,7 @@ class UnconnectedHome extends Component {
               type="radio"
               className="radio"
               name="parser-type"
-              checked={this.state.sortBy === "viral"}
+              checked={sortBy === "viral"}
             />
             <p
               id="viral"
@@ -299,7 +299,7 @@ class UnconnectedHome extends Component {
               type="radio"
               className="radio"
               name="parser-type"
-              checked={this.state.sortBy === "top"}
+              checked={sortBy === "top"}
             />
             <p
               id="top"
