@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { setActivePictureId } from "../../actions";
-import { Icons } from "../../assets";
+import { Icons, Colors } from "../../assets";
 
 export const UnconnectedPictureCard = props => {
   if (props.loading) {
@@ -52,6 +53,7 @@ export const UnconnectedPictureCard = props => {
   /*
     picture card copy sitting on top
     of original to be animated to lightbox
+    TODO: not implemented yet
   */
   const renderPictureCardCopy = () => (
     <div
@@ -118,4 +120,23 @@ export const UnconnectedPictureCard = props => {
 export const PictureCard = connect(null, { setActivePictureId })(
   UnconnectedPictureCard
 );
-export {};
+
+UnconnectedPictureCard.propTypes = {
+  picture: PropTypes.object,
+  setActivePictureId: PropTypes.string,
+  borderColor: PropTypes.string
+};
+
+UnconnectedPictureCard.defaultProps = {
+  picture: {
+    cover: "",
+    title: "",
+    commentCount: 0,
+    id: "",
+    points: 0,
+    nsfw: false,
+    images: {}
+  },
+  setActivePictureId: () => {},
+  borderColor: Colors.lightBlue
+};

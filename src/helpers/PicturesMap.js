@@ -10,13 +10,13 @@ export const makePicturesAppReady = ({
     new page for every 12 pictures
     mapped
   */
-  let localPageNumber = prevTotalPages || 1;
+  let localPageNumber = (prevTotalPages && prevTotalPages + 1) || 1;
 
-  const pageToPictures = { [prevTotalPages || 1]: [] };
+  const pageToPictures = { [(prevTotalPages && prevTotalPages + 1) || 1]: [] };
   const idToIndex = {};
   const totalResults = prevTotalResults || picturesData.length;
 
-  let totalPages = prevTotalPages || 1;
+  let totalPages = (prevTotalPages && prevTotalPages + 1) || 1;
   let nsfwResultsCount = 0;
 
   const mappedPicturesData = picturesData.map((pictureObj, index) => {

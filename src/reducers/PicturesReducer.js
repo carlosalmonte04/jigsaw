@@ -97,7 +97,7 @@ const PicturesReducer = (state = INITIAL_STATE, action) => {
     }
 
     case T.ADD_COMMENT_TO_PICTURE: {
-      const { pictureId, commentText } = action.payload;
+      const { pictureId } = action.payload;
       const pictureIndex = state.idToIndex[pictureId];
       const picture = state.picturesData[pictureIndex];
       picture.comments = [...picture.comments, {}];

@@ -1,6 +1,6 @@
 import { Colors } from "../assets";
 
-export const getRandomBorderColor = index => {
+export const getBorderColor = index => {
   switch (true) {
     case index === 0:
       return Colors.lightBlue;

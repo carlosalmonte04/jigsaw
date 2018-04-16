@@ -4,7 +4,7 @@ import { Icons } from "../../assets";
 import { setActivePictureId, addCommentToPicture } from "../../actions";
 import {
   getPictureComments,
-  getRandomBorderColor,
+  getBorderColor,
   makeCommentAppReady
 } from "../../helpers";
 
@@ -142,9 +142,7 @@ class UnconnectedPictureLightBox extends Component {
           <div
             className="image-container"
             style={{
-              border: `${getRandomBorderColor(
-                this.props.pictureIdx
-              )} solid 8px`,
+              border: `${getBorderColor(this.props.pictureIdx)} solid 8px`,
               background: `url(${imageToShow}`,
               backgroundSize: "cover"
             }}
@@ -219,7 +217,7 @@ const mapStateToProps = ({
     pictureIdx
   };
 };
-export const PictureLightBox = connect(mapStateToProps, { setActivePictureId })(
-  UnconnectedPictureLightBox,
+export const PictureLightBox = connect(mapStateToProps, {
+  setActivePictureId,
   addCommentToPicture
-);
+})(UnconnectedPictureLightBox);

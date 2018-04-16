@@ -1,3 +1,4 @@
+/* jslint radix: false */
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Pagination, PageItem, PageLink } from "mdbreact";
@@ -15,7 +16,7 @@ import { Img } from "../../assets";
 import {
   getPictures,
   makePicturesAppReady,
-  getRandomBorderColor
+  getBorderColor
 } from "../../helpers";
 
 const arrayOf12Elements = Array.apply(null, {
@@ -44,10 +45,6 @@ class UnconnectedHome extends Component {
     const { activePage, totalPages, totalResults } = this.props;
 
     if (prevActivePage !== activePage && activePage >= totalPages - 1) {
-      this.setState({
-        imgurPage: this.state.imgurPage + 1
-      });
-
       const { data: picturesData } = await getPictures({
         searchQuery: this.state.searchQuery,
         sort: this.state.sortBy,
@@ -60,6 +57,10 @@ class UnconnectedHome extends Component {
       });
 
       this.props.setMorePictures(appReadyPictures);
+
+      this.setState({
+        imgurPage: this.state.imgurPage + 1
+      });
     }
   }
 
@@ -95,7 +96,7 @@ class UnconnectedHome extends Component {
 
     this.props.setPictures(appReadyPictures);
 
-    this.animateCards();
+    this.fadeInPictureCards();
 
     this.setState({
       loading: false
@@ -114,28 +115,36 @@ class UnconnectedHome extends Component {
   };
 
   onPageNumberClick = ({ target: { text: pageNumber } }) => {
-    const parsedInt = parseInt(pageNumber);
-    this.props.setActivePage(parsedInt);
+    const parsedInt = parseInt(pageNumber, 10);
+    if (parsedInt) {
+      this.props.setActivePage(parsedInt);
+    }
   };
 
   onSortByClick = ({ target: { id: sortBy } }) => {
-    this.setState({
-      loading: true
-    });
-    this.setState({ sortBy }, this.onSubmit);
+    if (this.state.searchQuery) {
+      this.setState({
+        loading: true
+      });
+      this.setState({ sortBy }, this.onSubmit);
+    }
+    this.setState({ sortBy });
   };
 
-  animateCards = () => {
+  fadeInPictureCards = () => {
     const pictureCardEls = document.getElementsByClassName(
       "picture-card-container"
     );
-
-    TweenMax.staggerFromTo(
-      pictureCardEls,
-      0.1,
-      { opacity: 0, transform: [{ translateY: -30 }] },
-      { opacity: 1, transform: [{ translateY: 0 }] },
-      0.2
+    setTimeout(
+      () =>
+        TweenMax.staggerFromTo(
+          pictureCardEls,
+          0.1,
+          { opacity: 0, transform: `translateY(10px)` },
+          { opacity: 1, transform: `translateY(0px)` },
+          0.1
+        ),
+      100
     );
   };
 
@@ -146,14 +155,6 @@ class UnconnectedHome extends Component {
 
     return (
       <Pagination className="pagination-circle pg-teal">
-        <PageItem
-          disabled={this.props.activePage <= 1}
-          onClick={() => this.onPageNumberClick({ target: { text: 1 } })}
-        >
-          <PageLink className="page-link">
-            <span>First</span>
-          </PageLink>
-        </PageItem>
         <PageItem
           disabled={this.props.activePage <= 1}
           onClick={this.props.decrementActivePage}
@@ -178,9 +179,6 @@ class UnconnectedHome extends Component {
         >
           <PageLink className="page-link">&raquo;</PageLink>
         </PageItem>
-        <PageItem disabled={this.props.activePage < this.props.totalPages}>
-          <PageLink className="page-link">Last</PageLink>
-        </PageItem>
       </Pagination>
     );
   };
@@ -193,10 +191,9 @@ class UnconnectedHome extends Component {
           <PictureCard
             key={picture.id}
             picture={picture}
-            borderColor={getRandomBorderColor(index)}
+            borderColor={getBorderColor(index)}
           />
         ))}
-      {picturesOnView.length ? this.renderPagination() : null}
     </div>
   );
 
@@ -242,7 +239,7 @@ class UnconnectedHome extends Component {
                 onClick={this.onNsfwCheck}
                 onKeyPress={this.onNsfwCheck}
                 tabIndex={0}
-                role="input"
+                role="button"
               >
                 nsfw
               </span>
@@ -318,6 +315,7 @@ class UnconnectedHome extends Component {
             ? this.renderLoadingState()
             : this.renderPictures(picturesOnView)}
         </div>
+        {picturesOnView.length ? this.renderPagination() : null}
         <PictureLightBox />
         <div />
       </div>
@@ -326,8 +324,7 @@ class UnconnectedHome extends Component {
 }
 
 const mapStateToProps = ({
-  pictures: { pageToPictures, activePage, totalPages, nsfwResultsCount },
-  UI: { recentlySearched }
+  pictures: { pageToPictures, activePage, totalPages, nsfwResultsCount }
 }) => {
   const picturesOnView = pageToPictures[activePage] || [];
 
