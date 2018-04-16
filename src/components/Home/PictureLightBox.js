@@ -39,24 +39,6 @@ class UnconnectedPictureLightBox extends Component {
     }
   }
 
-  scrollCommentsConainerToBottom = () => {
-    this.commentsContainer = document.getElementById("comments-container");
-    this.commentsContainer.scrollTop = this.commentsContainer.scrollHeight;
-  };
-
-  animatePictureCardElToLightBox = pictureId => {
-    this.pictureCardEl = document.getElementById(`${pictureId}-picture-card`);
-    this.pictureCardCopyEl = document.getElementById(
-      `${pictureId}-picture-card-copy`
-    );
-    if (this.pictureCardEl && this.pictureCardCopyEl) {
-      this.pictureCardEl.className = `${this.pictureCardEl.className} hide`;
-      this.pictureCardCopyEl.className = `${
-        this.pictureCardCopyEl.className
-      } animate-in`;
-    }
-  };
-
   onOverlayClick = ({ target: { className } }) => {
     if (className === "picture-lightbox-container") {
       this.props.setActivePictureId("");
@@ -65,29 +47,6 @@ class UnconnectedPictureLightBox extends Component {
         this.pictureCardCopyEl.className = `picture-card-copy-container`;
       }
     }
-  };
-
-  renderComment = commentData => {
-    return (
-      <div key={commentData.id} className="comment-element">
-        <div className="comment">
-          <p className="comment-text">{commentData.comment}</p>
-          <div className="lighbox-comment-info">
-            <p className="comment-author">{commentData.author}</p>
-            <div className="lightbox-picture-likes">
-              <span className="comment-points link">reply</span>
-              <img
-                src={Icons.grayHeart}
-                alt="points"
-                className="smallest-picture-icon"
-              />
-              <p className="comment-points">{commentData.points}</p>
-            </div>
-          </div>
-        </div>
-        {commentData.children.map(this.renderComment)}
-      </div>
-    );
   };
 
   onCommentTextChange = e => {
@@ -113,6 +72,47 @@ class UnconnectedPictureLightBox extends Component {
     if (this.commentsContainer) {
       this.commentsContainer.scrollTop = this.commentsContainer.scrollHeight;
     }
+  };
+
+  scrollCommentsConainerToBottom = () => {
+    this.commentsContainer = document.getElementById("comments-container");
+    this.commentsContainer.scrollTop = this.commentsContainer.scrollHeight;
+  };
+
+  animatePictureCardElToLightBox = pictureId => {
+    this.pictureCardEl = document.getElementById(`${pictureId}-picture-card`);
+    this.pictureCardCopyEl = document.getElementById(
+      `${pictureId}-picture-card-copy`
+    );
+    if (this.pictureCardEl && this.pictureCardCopyEl) {
+      this.pictureCardEl.className = `${this.pictureCardEl.className} hide`;
+      this.pictureCardCopyEl.className = `${
+        this.pictureCardCopyEl.className
+      } animate-in`;
+    }
+  };
+
+  renderComment = commentData => {
+    return (
+      <div key={commentData.id} className="comment-element">
+        <div className="comment">
+          <p className="comment-text">{commentData.comment}</p>
+          <div className="lighbox-comment-info">
+            <p className="comment-author">{commentData.author}</p>
+            <div className="lightbox-picture-likes">
+              <span className="comment-points link">reply</span>
+              <img
+                src={Icons.grayHeart}
+                alt="points"
+                className="smallest-picture-icon"
+              />
+              <p className="comment-points">{commentData.points}</p>
+            </div>
+          </div>
+        </div>
+        {commentData.children.map(this.renderComment)}
+      </div>
+    );
   };
 
   render() {

@@ -40,7 +40,7 @@ export const UnconnectedPictureCard = props => {
   /* 
     cover images appear to be
     inconsistent from imgur.
-    1. get assigned cover from clean picture objs
+    1. get assigned cover from clean picture objects
     2. or manually get first image in image array
     3. or give up and just use a placeholder image from google
   */
@@ -123,7 +123,7 @@ export const PictureCard = connect(null, { setActivePictureId })(
 
 UnconnectedPictureCard.propTypes = {
   picture: PropTypes.object,
-  setActivePictureId: PropTypes.string,
+  setActivePictureId: PropTypes.func,
   borderColor: PropTypes.string
 };
 

@@ -1,4 +1,3 @@
-/* jslint radix: false */
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Pagination, PageItem, PageLink } from "mdbreact";
@@ -19,6 +18,11 @@ import {
   getBorderColor
 } from "../../helpers";
 
+/*
+  fake array of 12 elements
+  to create grid of cards 
+  in a loading state
+*/
 const arrayOf12Elements = Array.apply(null, {
   length: 12
 }).map(Number.call, Number);
