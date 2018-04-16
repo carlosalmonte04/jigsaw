@@ -696,3 +696,9 @@ p {
     padding: unset;
   }
 }
+
+@media screen and (max-width: 475px) {
+  .nsfw-checkbox-container {
+    padding-bottom: 6px;
+  }
+}
