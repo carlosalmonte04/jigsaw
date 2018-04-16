@@ -76,7 +76,9 @@ class UnconnectedPictureLightBox extends Component {
 
   scrollCommentsConainerToBottom = () => {
     this.commentsContainer = document.getElementById("comments-container");
-    this.commentsContainer.scrollTop = this.commentsContainer.scrollHeight;
+    if (this.commentsContainer) {
+      this.commentsContainer.scrollTop = this.commentsContainer.scrollHeight;
+    }
   };
 
   animatePictureCardElToLightBox = pictureId => {
