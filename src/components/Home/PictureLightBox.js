@@ -208,18 +208,20 @@ class UnconnectedPictureLightBox extends Component {
             <div className="picture-info-lightbox">
               <div className="lighbox-primary-info">
                 <div className="lightbox-picture-basic-info">
-                  <img
+                  <div
                     src={Icons.grayHeart}
                     alt="points"
                     className="likes-icon"
+                    style={{ background: `url(${Icons.grayHeart})` }}
                   />
                   <p className="likes-text">{points}</p>
                 </div>
                 <div className="lightbox-picture-basic-info">
-                  <img
+                  <div
                     src={Icons.grayEye}
                     alt="points"
                     className="views-icon"
+                    style={{ background: `url(${Icons.grayEye})` }}
                   />
                   <p className="likes-text">{views}</p>
                 </div>
