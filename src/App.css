@@ -23,13 +23,17 @@ input {
   font-size: 32px;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   position: absolute;
   height: 100%;
   width: 100%;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;
 }
 
 p {
@@ -42,6 +46,10 @@ p {
 
 .overflow-y-hidden {
   overflow-y: hidden;
+}
+
+input::placeholder {
+  color: #c6c4c4;
 }
 
 .picture-card {
@@ -395,6 +403,8 @@ p {
     #f6f7f8 40%,
     #f6f7f8 100%
   );
+  min-height: 265px;
+  min-width: 265px;
   background-size: 300% 300%;
   animation: fade-in 0.5s ease forwards, loading-bg 1s ease infinite forwards;
 }
@@ -508,7 +518,7 @@ p {
   position: absolute;
   box-shadow: -2px 2px 20px rgba(0, 0, 0, 0.3);
   width: 50%;
-  min-width: 450px;
+  min-width: 325px;
   background: white;
   display: flex;
   flex-direction: column;
@@ -720,6 +730,7 @@ p {
   align-items: center;
   justify-content: center;
   outline: none;
+  min-width: 80px;
 }
 
 .add-comment-btn:hover {
@@ -802,7 +813,9 @@ p {
   z-index: 9;
   background-color: rgba(0, 0, 0, 0.3);
   animation: fade-in 0.5s forwards;
+  -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
+  overflow-x: hidden;
   padding-top: 168px;
 }
 
@@ -945,11 +958,11 @@ p {
 
 @media screen and (max-width: 1070px) {
   .picture-lightbox-container {
-    overflow: scroll;
+    overflow-y: scroll;
   }
   .image-container {
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 }
 

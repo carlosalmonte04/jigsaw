@@ -87,6 +87,10 @@ class UnconnectedHome extends Component {
       e.preventDefault();
     }
 
+    const inputEl = document.getElementById("main-input");
+    console.log(`asdasdf`, inputEl.__proto__);
+    inputEl.blur();
+
     this.setState({
       loading: true
     });
@@ -95,8 +99,6 @@ class UnconnectedHome extends Component {
       searchQuery: this.state.searchQuery,
       sort: this.state.sortBy
     });
-
-    console.log(`PICASCS`, picturesData);
 
     const appReadyPictures = makePicturesAppReady({
       picturesData
@@ -221,7 +223,6 @@ class UnconnectedHome extends Component {
         className={`home-container ${isAppReady ? "start" : ""} ${
           animateToPictures ? "animate" : ""
         }`}
-        style={{ overflowY: activePictureId ? "hidden" : "scroll" }}
       >
         <div className="header">
           <img src={Img.logo} alt="logo" className="main-logo" />

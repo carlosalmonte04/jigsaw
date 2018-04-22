@@ -13,9 +13,8 @@ const sliderSettings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  lazyLoad: true,
-  prevArrow: <button>prev</button>,
-  nextArrow: <button>next</button>
+  swipe: true,
+  lazyLoad: true
 };
 
 export const UnconnectedPictureCard = props => {

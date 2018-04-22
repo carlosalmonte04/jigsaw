@@ -17,8 +17,9 @@ export const HomeInput = ({
       <div className={`main-input-container`}>
         <input
           type="text"
+          id="main-input"
           className={`search-input`}
-          placeholder="Search"
+          placeholder="'Cats', 'pizza', 'planes'"
           onFocus={onInputFocus}
           onSubmit={onSubmit}
           onChange={onInputTextChange}
