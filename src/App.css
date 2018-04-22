@@ -733,6 +733,7 @@ input::placeholder {
   justify-content: center;
   outline: none;
   min-width: 80px;
+  z-index: 999;
 }
 
 .add-comment-btn:hover {
@@ -993,5 +994,11 @@ input::placeholder {
   html,
   body {
     overflow-x: hidden;
+  }
+  .main-input-container {
+    width: 80%;
+  }
+  .search-btn {
+    width: 80%;
   }
 }
