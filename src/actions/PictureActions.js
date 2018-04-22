@@ -62,6 +62,17 @@ export const incrementActivePage = () => ({
 export const decrementActivePage = () => ({
   type: T.DECREMENT_ACTIVE_PAGE
 });
+
+export const incrementCommentsCount = ({ pictureData }) => ({
+  type: T.INCREMENT_COMMENTS_COUNT,
+  payload: { pictureData }
+});
+
+export const decrementCommentsCount = ({ pictureData }) => ({
+  type: T.DECREMENT_COMMENTS_COUNT,
+  payload: { pictureData }
+});
+
 // export const getLocalPictures = page => ({
 //   type: T.GET_LOCAL_PICTURES,
 //   payload: { page }

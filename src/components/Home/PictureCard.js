@@ -1,8 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Slider from "react-slick";
+import LinesEllipsis from "react-lines-ellipsis";
+import { getCroppedPictureTitle } from "../../helpers";
 import { setActivePictureId } from "../../actions";
 import { Icons, Colors } from "../../assets";
+
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  lazyLoad: true,
+  prevArrow: <button>prev</button>,
+  nextArrow: <button>next</button>
+};
 
 export const UnconnectedPictureCard = props => {
   if (props.loading) {
@@ -20,7 +34,7 @@ export const UnconnectedPictureCard = props => {
     picture: {
       cover: coverImageId,
       title,
-      commentCount,
+      commentsCount,
       id,
       points,
       nsfw,
@@ -29,6 +43,17 @@ export const UnconnectedPictureCard = props => {
     setActivePictureId,
     borderColor
   } = props;
+
+  const imagesEls = Object.values(images).map(({ link }) => (
+    <div style={{ width: "calc(25vw)", height: "calc(25vw)" }}>
+      <img
+        key={link}
+        src={`${link}`}
+        className="picture-card"
+        alt={`${getCroppedPictureTitle(title)}`}
+      />
+    </div>
+  ));
 
   const coverImage =
     picture.images[coverImageId] && picture.images[coverImageId].link;
@@ -46,7 +71,11 @@ export const UnconnectedPictureCard = props => {
   */
   const coverImageUrl = coverImage || firstImage || googleImagePlaceholder;
 
-  const onPictureClick = () => {
+  const onPictureClick = ({ target: { className } }) => {
+    if (className.includes("slick-arrow")) {
+      return;
+    }
+    document.body.className = "overflow-y-hidden";
     setActivePictureId(picture.id);
   };
 
@@ -60,7 +89,6 @@ export const UnconnectedPictureCard = props => {
       id={`${id}-picture-card-copy`}
       className="picture-card-copy-container"
       style={{
-        border: `8px ${nsfw ? "dashed" : "solid"} ${borderColor}`,
         borderRight: "none"
       }}
     >
@@ -78,37 +106,40 @@ export const UnconnectedPictureCard = props => {
         id={`${id}-picture-card`}
         className="picture-card-container"
         role="link"
-        style={{ border: `8px ${nsfw ? "dashed" : "solid"} ${borderColor}` }}
         onClick={onPictureClick}
       >
-        <img
-          src={`${coverImageUrl}`}
-          className="picture-card"
-          alt={`${title}`}
-        />
-        <div className="picture-title">
-          <h2>{title}</h2>
-        </div>
+        <Slider {...sliderSettings}>{imagesEls}</Slider>
         <div
           className="picture-info-container"
           // style={{ borderTop: `solid ${borderColor} 8px` }}
         >
-          <div className="picture-info">
-            <div className="picture-info-element">
-              <img
-                src={Icons.grayHeart}
-                alt="points"
-                className="small-picture-icon"
+          <div className="picture-info-column-container">
+            <div className="picture-card-title">
+              <LinesEllipsis
+                text={title}
+                maxLine="2"
+                ellipsis="..."
+                trimRight
+                basedOn="letters"
               />
-              <p>{points}</p>
             </div>
-            <div className="picture-info-element">
-              <img
-                src={Icons.grayComment}
-                alt="comments"
-                className="small-picture-icon"
-              />
-              <p className="">{commentCount}</p>
+            <div className="picture-card-bottom-info">
+              <div className="picture-info-element">
+                <img
+                  src={Icons.grayHeart}
+                  alt="points"
+                  className="small-picture-icon"
+                />
+                <p>{points}</p>
+              </div>
+              <div className="picture-info-element">
+                <img
+                  src={Icons.grayComment}
+                  alt="comments"
+                  className="small-picture-icon"
+                />
+                <p className="">{commentsCount}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -131,7 +162,7 @@ UnconnectedPictureCard.defaultProps = {
   picture: {
     cover: "",
     title: "",
-    commentCount: 0,
+    commentsCount: 0,
     id: "",
     points: 0,
     nsfw: false,

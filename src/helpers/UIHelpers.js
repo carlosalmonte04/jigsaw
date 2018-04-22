@@ -1,4 +1,5 @@
 import { Colors } from "../assets";
+import moment from "moment";
 
 export const getBorderColor = index => {
   switch (true) {
@@ -12,3 +13,16 @@ export const getBorderColor = index => {
       return Colors.yellow;
   }
 };
+
+export const getCroppedPictureTitle = title =>
+  title.length > 99 ? `${title.slice(0, 100)}...` : title;
+
+export const formatDate = datetime =>
+  moment(datetime * 1000).calendar(null, {
+    sameDay: "h:mma",
+    nextDay: "[Tomorrow]",
+    nextWeek: "dddd",
+    lastDay: "[Yesterday]",
+    lastWeek: "dddd",
+    sameElse: "MM/DD/YY"
+  });

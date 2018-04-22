@@ -108,6 +108,19 @@ const PicturesReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case T.INCREMENT_COMMENTS_COUNT: {
+      const { pictureData: { id: pictureId } } = action.payload;
+      const pictureIndex = state.idToIndex[pictureId];
+
+      const pictureInState = state.picturesData[pictureIndex];
+
+      pictureInState.commentsCount = pictureInState.commentsCount + 1;
+
+      return {
+        ...state
+      };
+    }
+
     // case T.GET_NEXT_PAGE: {
     //   return {
     //     ...state,

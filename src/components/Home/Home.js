@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Pagination, PageItem, PageLink } from "mdbreact";
 import { TweenMax } from "gsap";
-import { PictureCard, PictureLightBox } from "./";
+import { Route } from "react-router";
+import { PictureCard, PictureLightBox, HomeInput } from "./";
 import {
   setPictures,
   animateToPictures,
@@ -94,28 +95,30 @@ class UnconnectedHome extends Component {
       searchQuery: this.state.searchQuery,
       sort: this.state.sortBy
     });
+
+    console.log(`PICASCS`, picturesData);
+
     const appReadyPictures = makePicturesAppReady({
       picturesData
     });
 
     this.props.setPictures(appReadyPictures);
 
-    this.fadeInPictureCards();
+    // this.fadeInPictureCards();
 
+    if (this.pictureCardsWrapper) {
+      // setTimeout(
+      //   () =>
+      //     this.pictureCardsWrapper.scrollIntoView({
+      //       behavior: "smooth",
+      //       block: "start"
+      //     }),
+      //   100
+      // );
+    }
     this.setState({
       loading: false
     });
-
-    if (this.pictureCardsWrapper) {
-      setTimeout(
-        () =>
-          this.pictureCardsWrapper.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          }),
-        100
-      );
-    }
   };
 
   onPageNumberClick = ({ target: { text: pageNumber } }) => {
@@ -211,109 +214,29 @@ class UnconnectedHome extends Component {
 
   render() {
     const { searchQuery, isAppReady, loading, sortBy } = this.state;
-    const { picturesOnView, nsfwResultsCount } = this.props;
+    const { picturesOnView, nsfwResultsCount, activePictureId } = this.props;
 
     return (
       <div
         className={`home-container ${isAppReady ? "start" : ""} ${
           animateToPictures ? "animate" : ""
         }`}
+        style={{ overflowY: activePictureId ? "hidden" : "scroll" }}
       >
-        <img src={Img.logo} alt="logo" className="main-logo" />
-        <form className="form-container">
-          <div className={`main-input-container`}>
-            <input
-              type="text"
-              className={`search-input`}
-              placeholder="Search"
-              onFocus={this.onInputFocus}
-              onSubmit={this.onSubmit}
-              onChange={this.onInputTextChange}
-              value={searchQuery}
-            />
-            <div className="nsfw-checkbox-container">
-              <input
-                type="checkbox"
-                className="nsfw-checkbox"
-                checked={this.state.nsfw}
-                tabIndex={0}
-              />
-              <span
-                className="check-label"
-                onClick={this.onNsfwCheck}
-                onKeyPress={this.onNsfwCheck}
-                tabIndex={0}
-                role="button"
-              >
-                nsfw
-              </span>
-            </div>
-          </div>
-          {nsfwResultsCount ? (
-            <span className="nsfw-results-info">
-              {nsfwResultsCount} nsfw pictures within results.
-            </span>
-          ) : null}
-          <button
-            className="search-btn"
-            onClick={this.onSubmit}
-            onKeyPress={this.onSubmit}
-            tabIndex={0}
-          >
-            Search
-          </button>
-        </form>
-        <div className="sort-by">
-          <h4>sort by:</h4>
-          <div>
-            <input
-              readOnly
-              type="radio"
-              className="radio"
-              name="parser-type"
-              checked={sortBy === "time"}
-            />
-            <p
-              id="time"
-              className="check-label pad16 blue-label"
-              onClick={this.onSortByClick}
-            >
-              most recent
-            </p>
-          </div>
-          <div>
-            <input
-              readOnly
-              type="radio"
-              className="radio"
-              name="parser-type"
-              checked={sortBy === "viral"}
-            />
-            <p
-              id="viral"
-              className="check-label pad16 blue-label"
-              onClick={this.onSortByClick}
-            >
-              viral
-            </p>
-          </div>
-          <div>
-            <input
-              readOnly
-              type="radio"
-              className="radio"
-              name="parser-type"
-              checked={sortBy === "top"}
-            />
-            <p
-              id="top"
-              className="check-label pad16 blue-label"
-              onClick={this.onSortByClick}
-            >
-              top
-            </p>
-          </div>
+        <div className="header">
+          <img src={Img.logo} alt="logo" className="main-logo" />
         </div>
+        <HomeInput
+          searchQuery={this.state.searchQuery}
+          sortByValue={this.state.sortBy}
+          nsfw={this.state.nsfw}
+          nsfwResultsCount={this.props.nsfwResultsCount}
+          onSortByClick={this.onSortByClick}
+          onInputFocus={this.onInputFocus}
+          onSubmit={this.onSubmit}
+          onInputTextChange={this.onInputTextChange}
+          onNsfwCheck={this.onNsfwCheck}
+        />
         <div id="picture-cards-wrapper">
           {loading
             ? this.renderLoadingState()
@@ -328,7 +251,13 @@ class UnconnectedHome extends Component {
 }
 
 const mapStateToProps = ({
-  pictures: { pageToPictures, activePage, totalPages, nsfwResultsCount }
+  pictures: {
+    pageToPictures,
+    activePage,
+    totalPages,
+    nsfwResultsCount,
+    activePictureId
+  }
 }) => {
   const picturesOnView = pageToPictures[activePage] || [];
 
@@ -337,7 +266,8 @@ const mapStateToProps = ({
     animateToPictures,
     activePage,
     totalPages,
-    nsfwResultsCount
+    nsfwResultsCount,
+    activePictureId
   };
 };
 

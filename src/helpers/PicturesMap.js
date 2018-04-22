@@ -40,7 +40,7 @@ export const makePicturesAppReady = ({
     */
     const appReadyPicture = {
       id: pictureObj.id,
-      commentCount: pictureObj.comment_count,
+      commentsCount: pictureObj.comment_count,
       cover: pictureObj.cover,
       downs: pictureObj.downs,
       description: pictureObj.description,
@@ -98,6 +98,10 @@ export const makeCommentAppReady = ({ pictureId, commentText }) => ({
   points: 0,
   ups: 0,
   vote: null,
-  datetime: new Date().getTime(),
+  /*
+    datetime from imgur comes in
+    as datetime / 1000
+  */
+  datetime: new Date().getTime() / 1000,
   deleted: false
 });
