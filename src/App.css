@@ -29,7 +29,7 @@ body {
 }
 
 body {
-  position: absolute;
+  position: relative;
   height: 100%;
   width: 100%;
   align-items: center;
@@ -525,6 +525,7 @@ input::placeholder {
   align-self: center;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
   top: 10%;
 }
 
@@ -569,6 +570,7 @@ input::placeholder {
 .comments-container {
   padding-top: 16px;
   overflow-y: scroll;
+  overflow-x: hidden;
   max-height: 370px;
   padding-bottom: 16px;
 }
@@ -987,5 +989,9 @@ input::placeholder {
 @media screen and (max-width: 475px) {
   .nsfw-checkbox-container {
     padding-bottom: 6px;
+  }
+  html,
+  body {
+    overflow-x: hidden;
   }
 }

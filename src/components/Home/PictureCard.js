@@ -13,7 +13,10 @@ const sliderSettings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  swipe: true,
+  swipeToSlide: false,
+  swipe: false,
+  touchMove: false,
+  draggable: false,
   lazyLoad: true
 };
 
